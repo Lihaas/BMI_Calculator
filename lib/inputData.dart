@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'IconContanor.dart';
 import 'ReuseableCard.dart';
+import 'resultPage.dart';
 
 enum Gender {
   male,
@@ -16,6 +17,8 @@ Gender SelectGender;
 Color ActiveColor = Color(0xFF9c0000);
 Color UnActiveCardColor = Color(0xFFd50000);
 int height = 60;
+int weight = 50;
+int age = 22;
 
 double BottomHeight = 50;
 
@@ -136,7 +139,7 @@ class _InputDataState extends State<InputData> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Text(
-                              "38" + " KG",
+                              weight.toString() + " KG",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,
@@ -146,12 +149,24 @@ class _InputDataState extends State<InputData> {
                           Row(
                             children: [
                               Expanded(
-                                child:
-                                    RounderButton(icon: FontAwesomeIcons.minus),
+                                child: RounderButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      weight--;
+                                    });
+                                  },
+                                ),
                               ),
                               Expanded(
-                                child:
-                                    RounderButton(icon: FontAwesomeIcons.plus),
+                                child: RounderButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      weight++;
+                                    });
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -167,7 +182,7 @@ class _InputDataState extends State<InputData> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Text(
-                              "Weight",
+                              "Age",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -175,7 +190,7 @@ class _InputDataState extends State<InputData> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Text(
-                              "38" + " KG",
+                              age.toString() + " Yr",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,
@@ -185,12 +200,24 @@ class _InputDataState extends State<InputData> {
                           Row(
                             children: [
                               Expanded(
-                                child:
-                                    RounderButton(icon: FontAwesomeIcons.minus),
+                                child: RounderButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      age--;
+                                    });
+                                  },
+                                ),
                               ),
                               Expanded(
-                                child:
-                                    RounderButton(icon: FontAwesomeIcons.plus),
+                                child: RounderButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      age++;
+                                    });
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -201,9 +228,15 @@ class _InputDataState extends State<InputData> {
                 ],
               ),
             ),
-            Container(
-              color: ActiveColor,
-              height: BottomHeight,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Result()));
+              },
+              child: Container(
+                color: ActiveColor,
+                height: BottomHeight,
+              ),
             )
           ],
         ),
@@ -227,9 +260,10 @@ class _InputDataState extends State<InputData> {
 }
 
 class RounderButton extends StatelessWidget {
-  RounderButton({@required this.icon});
+  RounderButton({@required this.icon, this.onPressed});
 
   final IconData icon;
+  Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +272,7 @@ class RounderButton extends StatelessWidget {
         icon,
         color: Colors.white,
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       elevation: 6,
       constraints: BoxConstraints.tightFor(width: 50, height: 50),
       shape: CircleBorder(),
