@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'IconContanor.dart';
 import 'ReuseableCard.dart';
 import 'resultPage.dart';
+import 'calclutorMind.dart';
 
 enum Gender {
   male,
@@ -91,6 +92,7 @@ class _InputDataState extends State<InputData> {
                   colors: UnActiveCardColor,
                   cardMake: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Center(
                         child: Container(
@@ -100,17 +102,17 @@ class _InputDataState extends State<InputData> {
                             "Body Height",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 22,
                             ),
                           ),
                         ),
                       ),
                       Center(
                         child: Text(
-                          height.toString(),
+                          height.toString() + " feet",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 28,
+                              fontSize: 38,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -127,13 +129,14 @@ class _InputDataState extends State<InputData> {
                     child: ReuseableCard(
                       colors: UnActiveCardColor,
                       cardMake: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Text(
                               "Weight",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  TextStyle(color: Colors.white, fontSize: 22),
                             ),
                           ),
                           Padding(
@@ -142,7 +145,7 @@ class _InputDataState extends State<InputData> {
                               weight.toString() + " KG",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -178,13 +181,14 @@ class _InputDataState extends State<InputData> {
                     child: ReuseableCard(
                       colors: UnActiveCardColor,
                       cardMake: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Text(
                               "Age",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  TextStyle(color: Colors.white, fontSize: 22),
                             ),
                           ),
                           Padding(
@@ -193,7 +197,7 @@ class _InputDataState extends State<InputData> {
                               age.toString() + " Yr",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -230,12 +234,34 @@ class _InputDataState extends State<InputData> {
             ),
             GestureDetector(
               onTap: () {
+                calculatorMind cm = new calculatorMind(height, weight);
+                String bmi = cm.getBMI();
+                String nota = cm.getNotation();
+                String res = cm.getResult();
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Result()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Result(
+                              Results: res,
+                              BMI: bmi,
+                              Notation: nota,
+                            )));
               },
               child: Container(
                 color: ActiveColor,
                 height: BottomHeight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                        child: Text(
+                      "Result",
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    )),
+                  ],
+                ),
               ),
             )
           ],
